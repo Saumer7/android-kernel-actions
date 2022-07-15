@@ -191,13 +191,13 @@ if [[ $arch = "arm64" ]]; then
     elif [[ $compiler = straton-clang/* ]]; then
         ver="${compiler/straton-clang\/}"
         ver_number="${ver/\/binutils}"
-        url="https://github.com/shygos/straton-clang/archive/main.tar.gz"
+        url="https://github.com/shygos/straton-clang/archive/${ver_number}.tar.gz"
         binutils="$([[ $ver = */binutils ]] && echo true || echo false)"
 
         # Due to different time in container and the host,
         # disable certificate check
         echo "Downloading $url"
-        if ! wget --no-check-certificate "$url" -O /tmp/straton-clang-"main".tar.gz &>/dev/null; then
+        if ! wget --no-check-certificate "$url" -O /tmp/straton-clang-"${ver_number}".tar.gz &>/dev/null; then
             err "Failed downloading toolchain, refer to the README for details"
             exit 1
         fi
@@ -212,8 +212,8 @@ if [[ $arch = "arm64" ]]; then
         fi
 
         apt install -y --no-install-recommends libgcc-10-dev || exit 127
-        extract_tarball /tmp/straton-clang-"main".tar.gz /
-        cd /straton-clang-"main"* || exit 127
+        extract_tarball /tmp/straton-clang-"${ver_number}".tar.gz /
+        cd /straton-clang-"${ver_number}"* || exit 127
         straton_path="$(pwd)"
         cd "$workdir"/"$kernel_path" || exit 127
 
