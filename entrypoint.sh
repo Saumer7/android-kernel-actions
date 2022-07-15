@@ -191,7 +191,7 @@ if [[ $arch = "arm64" ]]; then
     elif [[ $compiler = straton-clang/* ]]; then
         ver="${compiler/proton-clang\/}"
         ver_number="${ver/\/binutils}"
-        url="https://github.com/shygos/straton-clang/archive/${ver_number}.tar.gz"
+        url="https://github.com/shygos/straton-clang/archive/main.tar.gz"
         binutils="$([[ $ver = */binutils ]] && echo true || echo false)"
 
         # Due to different time in container and the host,
