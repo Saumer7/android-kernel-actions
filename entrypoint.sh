@@ -189,7 +189,7 @@ if [[ $arch = "arm64" ]]; then
         export CROSS_COMPILE_ARM32="arm-linux-androideabi-"
  
     elif [[ $compiler = straton-clang/* ]]; then
-        ver="${compiler/proton-clang\/}"
+        ver="${compiler/straton-clang\/}"
         ver_number="${ver/\/binutils}"
         url="https://github.com/shygos/straton-clang/archive/main.tar.gz"
         binutils="$([[ $ver = */binutils ]] && echo true || echo false)"
@@ -197,7 +197,7 @@ if [[ $arch = "arm64" ]]; then
         # Due to different time in container and the host,
         # disable certificate check
         echo "Downloading $url"
-        if ! wget --no-check-certificate "$url" -O /tmp/proton-clang-"${ver_number}".tar.gz &>/dev/null; then
+        if ! wget --no-check-certificate "$url" -O /tmp/straton-clang-"main".tar.gz &>/dev/null; then
             err "Failed downloading toolchain, refer to the README for details"
             exit 1
         fi
@@ -212,12 +212,12 @@ if [[ $arch = "arm64" ]]; then
         fi
 
         apt install -y --no-install-recommends libgcc-10-dev || exit 127
-        extract_tarball /tmp/proton-clang-"${ver_number}".tar.gz /
-        cd /proton-clang-"${ver_number}"* || exit 127
-        proton_path="$(pwd)"
+        extract_tarball /tmp/straton-clang-"main".tar.gz /
+        cd /straton-clang-"main"* || exit 127
+        straton_path="$(pwd)"
         cd "$workdir"/"$kernel_path" || exit 127
 
-        export PATH="$proton_path/bin:${PATH}"
+        export PATH="$straton_path/bin:${PATH}"
         export CLANG_TRIPLE="aarch64-linux-gnu-"
         export CROSS_COMPILE="aarch64-linux-gnu-"
         export CROSS_COMPILE_ARM32="arm-linux-gnueabi-"
